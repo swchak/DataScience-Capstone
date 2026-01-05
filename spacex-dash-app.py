@@ -61,7 +61,9 @@ def get_pie_chart(entered_site):
         grouped_df = filtered_df.groupby('class')['class'].count().reset_index(name="count")
         fig = px.pie(grouped_df, values='count',
         names='class',
-        title=f'Total Success Launches for site {entered_site}')
+        color='class',
+        title=f'Total Success Launches for site {entered_site}',
+        color_discrete_map={0: 'Red', 1: 'Green'})
         return fig
 
 
@@ -72,23 +74,21 @@ def get_pie_chart(entered_site):
     [Input(component_id='site-dropdown', component_property='value'),
     Input(component_id="payload-slider", component_property="value")])
 def success_payload_scatter_chart(entered_site, entered_payload):
-    filtered_df = spacex_df
+    [curr_min, curr_max] = entered_payload
+    filtered_payload_df = spacex_df[(spacex_df['Payload Mass (kg)'] >= curr_min) & (spacex_df['Payload Mass (kg)'] <= curr_max)]
+
     if entered_site == 'ALL':
-        filtered_df = spacex_df
         fig = px.scatter(
-            filtered_df,
+            filtered_payload_df,
             x='Payload Mass (kg)',
             y="class",
             color="Booster Version Category",
             title=f'Correlation between Payload and Success for ALL sites')
         return fig
     else:
-        [curr_min, curr_max] = entered_payload
-        print(curr_min, curr_max)
-        filtered_df = spacex_df[(spacex_df['Launch Site'] == entered_site) & (spacex_df['Payload Mass (kg)'] >= curr_min) & (spacex_df['Payload Mass (kg)'] <= curr_max) ]
-        print(filtered_df)
+        filtered_site_df = filtered_payload_df[(filtered_payload_df['Launch Site'] == entered_site)]
         fig = px.scatter(
-            filtered_df,
+            filtered_site_df,
             x='Payload Mass (kg)',
             y="class",
             color="Booster Version Category",
