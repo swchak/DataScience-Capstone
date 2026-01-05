@@ -193,9 +193,13 @@ Contributions are welcome! To contribute:
 - Documentation improvements
 - New data sources or collection methods
 
-## Author
+## Author & Acknowledgments
 
-Created as a data science capstone project by Swetha Chakravarthy
+Created as a capstone project for the **IBM Applied Data Science Specialization** on Coursera by Swetha Chakravarthy.
+
+### Credits
+
+This project was completed as part of the IBM Applied Data Science Professional Certificate on Coursera. The Jupyter notebooks in this project are based on IBM's course materials and lab assignments.
 
 ## License
 
